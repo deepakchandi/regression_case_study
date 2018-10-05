@@ -1,12 +1,12 @@
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
+from sklearn.metrics import mean_squared_log_error
 
-# TODO: train test split? where?
+def rmsle(y_pred, y_true): 
+    """Compute the Root Mean Squared Log Error of the y_pred and y_true values"""
 
-def import_data(filepath):
-    """Read file from the path and return Pandas DataFrame"""
-    return pd.read_csv(filepath)
+    return np.sqrt(mean_squared_log_error(y_true, y_pred))
 
 
 def select_features(df):
