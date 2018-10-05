@@ -25,11 +25,9 @@ def select_features(df):
 
 def one_hot(input_df, column_name):
     df = input_df.copy()
-    column = 'Transmission'
-
-    dummies = pd.get_dummies(df[column].str.lower())
+    dummies = pd.get_dummies(df[column_name].str.lower())
     dummies.drop(dummies.columns[-1], axis=1, inplace=True)
-    return df.drop(column, axis=1).merge(dummies, left_index=True, right_index=True)
+    return df.drop(column_name, axis=1).merge(dummies, left_index=True, right_index=True)
 
 
 # TODO: Feature clean-up -> input: x array -> cleaned x array
