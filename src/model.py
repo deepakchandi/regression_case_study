@@ -23,8 +23,14 @@ def select_features(df):
     return X_df, y_df
 
 
-def one_hot(df, column_name):
-    pass
+def one_hot(input_df, column_name):
+    df = input_df.copy()
+    column = 'Transmission'
+
+    dummies = pd.get_dummies(df[column].str.lower())
+    dummies.drop(dummies.columns[-1], axis=1, inplace=True)
+    return df.drop(column, axis=1).merge(dummies, left_index=True, right_index=True)
+
 
 # TODO: Feature clean-up -> input: x array -> cleaned x array
 # def feature_eng(x_df):
@@ -41,7 +47,7 @@ def clean_features(x_df):
     x_cleaned = x_cleaned.merge(states, left_index=True, right_index=True)
 
     # fill Nan values with median of column
-    x_cleaned.fillna(x_cleaned.median(axis=0), axis=0, inplace=True)
+    # x_cleaned.fillna(x_cleaned.median(axis=0), axis=0, inplace=True)
 
     return x_cleaned
 
