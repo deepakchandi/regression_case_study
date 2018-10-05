@@ -22,20 +22,26 @@ def select_features(df):
 
     return X_df, y_df
 
+
+def one_hot(df, column_name):
+    pass
+
 # TODO: Feature clean-up -> input: x array -> cleaned x array
 # def feature_eng(x_df):
 #     x_df.get_dummies
-
 def clean_features(x_df):
     """Input features DataFrame, clean features by columns, 
     and return cleaned DataFrame"""
     x_cleaned = x_df.copy()
-    
+
     # State: dummy columns
     states = pd.get_dummies(x_df['state'])
     states.drop(['Unspecified', 'Washington DC'], axis=1, inplace=True)
     x_cleaned.drop('state', axis=1, inplace=True)
     x_cleaned = x_cleaned.merge(states, left_index=True, right_index=True)
+
+    # fill Nan values with median of column
+    x_cleaned.fillna(x_cleaned.median(axis=0), axis=0, inplace=True)
 
     return x_cleaned
 
